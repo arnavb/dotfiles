@@ -230,7 +230,7 @@ local third_party_libraries
 if string.sub(buffer_file_name, 1, string.len(neovim_parent_dir)) == neovim_parent_dir then
   third_party_libraries = vim.api.nvim_get_runtime_file('', true)
 else
-  third_party_libraries = '${3rd}/love2d/library'
+  third_party_libraries = { '${3rd}/love2d/library' }
 end
 
 lspconfig.sumneko_lua.setup {
