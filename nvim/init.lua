@@ -30,6 +30,7 @@ require('packer').startup(function(use)
     requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
   }
   use 'onsails/lspkind.nvim'
+  use 'j-hui/fidget.nvim'
 
   use 'L3MON4D3/LuaSnip'
 
@@ -46,6 +47,8 @@ require('packer').startup(function(use)
 
   use 'andweeb/presence.nvim'
 end)
+
+require('fidget').setup {}
 
 -- Options
 vim.o.termguicolors = true
