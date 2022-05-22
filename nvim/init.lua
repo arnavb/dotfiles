@@ -268,7 +268,7 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.s
 local diagnosticSigns = {
   Error = ' ',
   Warn = ' ',
-  Hint = ' ',
+  Hint = ' ',
   Info = ' ',
 }
 
