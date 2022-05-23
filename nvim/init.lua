@@ -109,21 +109,6 @@ local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 local lspkind = require 'lspkind'
 
----@param hl_name string
----@return table
-local function border(hl_name)
-  return {
-    { '╭', hl_name },
-    { '─', hl_name },
-    { '╮', hl_name },
-    { '│', hl_name },
-    { '╯', hl_name },
-    { '─', hl_name },
-    { '╰', hl_name },
-    { '│', hl_name },
-  }
-end
-
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -157,11 +142,17 @@ cmp.setup {
     completeopt = 'menu,menuone,noinsert',
   },
   window = {
-    completion = {
-      border = border 'CmpBorder',
-    },
     documentation = {
-      border = border 'CmpDocBorder',
+      border = {
+        { '╭', 'CmpDocBorder' },
+        { '─', 'CmpDocBorder' },
+        { '╮', 'CmpDocBorder' },
+        { '│', 'CmpDocBorder' },
+        { '╯', 'CmpDocBorder' },
+        { '─', 'CmpDocBorder' },
+        { '╰', 'CmpDocBorder' },
+        { '│', 'CmpDocBorder' },
+      },
     },
   },
   formatting = {
