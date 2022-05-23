@@ -34,7 +34,7 @@ require('packer').startup(function(use)
 
   use 'L3MON4D3/LuaSnip'
 
-  use 'marko-cerovac/material.nvim'
+  use 'rebelot/kanagawa.nvim'
 
   use {
     'lewis6991/gitsigns.nvim',
@@ -69,8 +69,7 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 vim.o.pumheight = 10
 
-vim.g.material_style = 'deep ocean'
-vim.cmd [[ colorscheme material ]]
+vim.cmd [[ colorscheme kanagawa ]]
 
 -- Treesitter
 require('nvim-treesitter.configs').setup {
