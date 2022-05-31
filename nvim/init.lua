@@ -34,7 +34,7 @@ require('packer').startup(function(use)
 
   use 'L3MON4D3/LuaSnip'
 
-  use 'rebelot/kanagawa.nvim'
+  use 'catppuccin/nvim'
 
   use {
     'lewis6991/gitsigns.nvim',
@@ -69,7 +69,13 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 vim.o.pumheight = 10
 
-vim.cmd [[ colorscheme kanagawa ]]
+vim.cmd [[ colorscheme catppuccin ]]
+
+-- Override backgrounds for diagnostics
+vim.cmd [[ hi DiagnosticError guibg=NONE ]]
+vim.cmd [[ hi DiagnosticInfo guibg=NONE ]]
+vim.cmd [[ hi DiagnosticHint guibg=NONE ]]
+vim.cmd [[ hi DiagnosticWarn guibg=NONE ]]
 
 -- Treesitter
 require('nvim-treesitter.configs').setup {
