@@ -180,6 +180,8 @@ local lspconfig = require 'lspconfig'
 
 ---@param bufnr number
 local function common_on_attach(_, bufnr)
+  require('lsp_signature').on_attach()
+
   local opts = { buffer = bufnr, silent = true }
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
@@ -191,8 +193,7 @@ local function common_on_attach(_, bufnr)
   vim.keymap.set('v', '<leader>ga', require('cosmic-ui').range_code_actions, { silent = true })
 end
 
-require('lsp_signature').setup {}
-require('cosmic-ui').setup()
+require('cosmic-ui').setup { border_style = 'rounded' }
 
 require('null-ls').setup {
   sources = {
