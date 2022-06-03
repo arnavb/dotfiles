@@ -1,7 +1,7 @@
 -- Global stuff
 vim.g.mapleader = ' '
 
--- Keybindings
+-- General Keybindings
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
 -- Bootstrap packer.nvim (from: https://github.com/wbthomason/packer.nvim#bootstrapping)
