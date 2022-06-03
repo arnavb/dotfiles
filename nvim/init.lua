@@ -71,11 +71,15 @@ vim.o.pumheight = 10
 
 vim.cmd [[ colorscheme catppuccin ]]
 
+local colors = require('catppuccin.api.colors').get_colors()
+
 -- Override backgrounds for diagnostics
 vim.cmd [[ hi DiagnosticError guibg=NONE ]]
 vim.cmd [[ hi DiagnosticInfo guibg=NONE ]]
 vim.cmd [[ hi DiagnosticHint guibg=NONE ]]
 vim.cmd [[ hi DiagnosticWarn guibg=NONE ]]
+vim.cmd('hi FloatBorder guibg=' .. colors.base)
+vim.cmd('hi NormalFloat guibg=' .. colors.base)
 
 -- Treesitter
 require('nvim-treesitter.configs').setup {
