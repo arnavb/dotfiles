@@ -183,7 +183,7 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 local lspconfig = require 'lspconfig'
 
 ---@param bufnr number
-local function common_on_attach(_, bufnr)
+local function common_on_attach(client, bufnr)
   require('lsp_signature').on_attach()
 
   local opts = { buffer = bufnr, silent = true }
@@ -196,6 +196,16 @@ local function common_on_attach(_, bufnr)
   vim.keymap.set('n', 'gn', require('cosmic-ui').rename, { silent = true })
   vim.keymap.set('n', '<leader>ga', require('cosmic-ui').code_actions, { silent = true })
   vim.keymap.set('v', '<leader>ga', require('cosmic-ui').range_code_actions, { silent = true })
+
+  if client.supports_method 'textDocument/formatting' then
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      group = formattingGroup,
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.format { bufnr = bufnr }
+      end,
+    })
+  end
 end
 
 require('cosmic-ui').setup { border_style = 'rounded' }
@@ -204,17 +214,6 @@ require('null-ls').setup {
   sources = {
     require('null-ls').builtins.formatting.stylua,
   },
-  on_attach = function(client, bufnr)
-    if client.supports_method 'textDocument/formatting' then
-      vim.api.nvim_create_autocmd('BufWritePre', {
-        group = formattingGroup,
-        buffer = bufnr,
-        callback = function()
-          vim.lsp.buf.format { bufnr = bufnr }
-        end,
-      })
-    end
-  end,
 }
 
 lspconfig.cmake.setup {
