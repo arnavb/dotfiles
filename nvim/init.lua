@@ -35,6 +35,7 @@ require('packer').startup(function(use)
   use 'L3MON4D3/LuaSnip'
 
   use 'catppuccin/nvim'
+  use 'rebelot/kanagawa.nvim'
 
   use {
     'lewis6991/gitsigns.nvim',
@@ -69,7 +70,7 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 vim.o.pumheight = 10
 
-vim.cmd [[ colorscheme catppuccin ]]
+vim.cmd [[ colorscheme kanagawa ]]
 
 local colors = require('catppuccin.api.colors').get_colors()
 
