@@ -20,21 +20,8 @@ require('packer').startup(function(use)
   use 'lukas-reineke/indent-blankline.nvim'
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
-  use 'jose-elias-alvarez/null-ls.nvim'
-  use 'neovim/nvim-lspconfig'
-  use 'hrsh7th/nvim-cmp'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'ray-x/lsp_signature.nvim'
-  use {
-    'CosmicNvim/cosmic-ui',
-    requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim' },
-  }
-  use 'onsails/lspkind.nvim'
-  use 'j-hui/fidget.nvim'
-
   use 'L3MON4D3/LuaSnip'
 
-  use 'catppuccin/nvim'
   use 'rebelot/kanagawa.nvim'
 
   use {
@@ -49,7 +36,6 @@ require('packer').startup(function(use)
   use 'andweeb/presence.nvim'
 end)
 
-require('fidget').setup {}
 
 -- Options
 vim.o.termguicolors = true
@@ -72,16 +58,6 @@ vim.o.pumheight = 10
 
 vim.cmd [[ colorscheme kanagawa ]]
 
-local colors = require('catppuccin.api.colors').get_colors()
-
--- Override backgrounds for diagnostics
-vim.cmd [[ hi DiagnosticError guibg=NONE ]]
-vim.cmd [[ hi DiagnosticInfo guibg=NONE ]]
-vim.cmd [[ hi DiagnosticHint guibg=NONE ]]
-vim.cmd [[ hi DiagnosticWarn guibg=NONE ]]
-vim.cmd('hi FloatBorder guibg=' .. colors.base)
-vim.cmd('hi NormalFloat guibg=' .. colors.base)
-
 -- Treesitter
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'all',
@@ -103,9 +79,7 @@ vim.api.nvim_create_autocmd('FileType', {
   group = indentationGroup,
 })
 
-local formattingGroup = vim.api.nvim_create_augroup('LspFormatting', { clear = true })
 local terminalGroup = vim.api.nvim_create_augroup('Terminal', { clear = true })
-
 -- Hide line numbers in the terminal
 vim.api.nvim_create_autocmd('TermOpen', {
   callback = function()
@@ -115,181 +89,8 @@ vim.api.nvim_create_autocmd('TermOpen', {
   group = terminalGroup,
 })
 
--- Language Servers
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
-local lspkind = require 'lspkind'
-
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert {
-    ['<C-Space>'] = cmp.mapping.complete {},
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.confirm { select = true }
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-  },
-  sources = {
-    { name = 'luasnip' },
-    { name = 'nvim_lsp' },
-  },
-  completion = {
-    completeopt = 'menu,menuone,noinsert',
-  },
-  window = {
-    documentation = {
-      border = {
-        { '╭', 'CmpDocBorder' },
-        { '─', 'CmpDocBorder' },
-        { '╮', 'CmpDocBorder' },
-        { '│', 'CmpDocBorder' },
-        { '╯', 'CmpDocBorder' },
-        { '─', 'CmpDocBorder' },
-        { '╰', 'CmpDocBorder' },
-        { '│', 'CmpDocBorder' },
-      },
-    },
-  },
-  formatting = {
-    format = lspkind.cmp_format { mode = 'symbol_text' },
-  },
-  experimental = {
-    ghost_text = true,
-  },
-}
-
 require('indent_blankline').setup {
   show_current_context = true,
 }
 require('Comment').setup()
 require('gitsigns').setup()
-
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local lspconfig = require 'lspconfig'
-
----@param bufnr number
-local function common_on_attach(client, bufnr)
-  require('lsp_signature').on_attach()
-
-  local opts = { buffer = bufnr, silent = true }
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-  vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
-  vim.keymap.set('n', 'gn', require('cosmic-ui').rename, { silent = true })
-  vim.keymap.set('n', '<leader>ga', require('cosmic-ui').code_actions, { silent = true })
-  vim.keymap.set('v', '<leader>ga', require('cosmic-ui').range_code_actions, { silent = true })
-
-  if client.supports_method 'textDocument/formatting' then
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      group = formattingGroup,
-      buffer = bufnr,
-      callback = function()
-        vim.lsp.buf.format { bufnr = bufnr }
-      end,
-    })
-  end
-end
-
-require('cosmic-ui').setup { border_style = 'rounded' }
-
-require('null-ls').setup {
-  sources = {
-    require('null-ls').builtins.formatting.stylua,
-  },
-}
-
-lspconfig.cmake.setup {
-  capabilities = capabilities,
-  on_attach = common_on_attach,
-}
-
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
-
-local neovim_parent_dir = vim.fn.resolve(vim.fn.stdpath 'config')
-local buffer_file_name = vim.fn.expand '%:p'
-
-local third_party_libraries
-
--- Include neovim runtime files if configuring, love2d otherwise
-if string.sub(buffer_file_name, 1, string.len(neovim_parent_dir)) == neovim_parent_dir then
-  third_party_libraries = vim.api.nvim_get_runtime_file('', true)
-else
-  third_party_libraries = { '${3rd}/love2d/library' }
-end
-
-lspconfig.sumneko_lua.setup {
-  capabilities = capabilities,
-  on_attach = common_on_attach,
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT',
-        path = runtime_path,
-      },
-      diagnostics = {
-        globals = { 'vim' },
-      },
-      telemetry = {
-        enable = false,
-      },
-      workspace = {
-        checkThirdParty = false,
-        library = third_party_libraries,
-      },
-    },
-  },
-}
-
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = 'rounded',
-})
-
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signatureHelp, {
-  border = 'rounded',
-})
-
--- Diagnostics
-local diagnosticSigns = {
-  Error = ' ',
-  Warn = ' ',
-  Hint = ' ',
-  Info = ' ',
-}
-
-for type, icon in pairs(diagnosticSigns) do
-  local hl = 'DiagnosticSign' .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
-end
-
-vim.diagnostic.config {
-  underline = true,
-  severity_sort = true,
-  virtual_text = false,
-  float = {
-    border = 'rounded',
-    focusable = false,
-    header = { '  Diagnostics:', 'Normal' },
-    source = 'always',
-  },
-}
