@@ -60,6 +60,8 @@ vim.bo.undofile = true
 vim.wo.signcolumn = 'yes'
 vim.wo.number = true
 vim.wo.relativenumber = true
+vim.wo.breakindent = true
+vim.opt.showbreak = "↪ "
 vim.o.pumheight = 10
 
 vim.cmd [[ colorscheme kanagawa ]]
