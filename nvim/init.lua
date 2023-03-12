@@ -41,6 +41,7 @@ require('packer').startup(function(use)
   use 'andweeb/presence.nvim'
 end)
 
+vim.opt.mouse = ""
 
 -- Options
 vim.o.termguicolors = true
