@@ -4,11 +4,6 @@ vim.g.mapleader = ' '
 -- General Keybindings
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
-vim.keymap.set({'n'}, 'h', '<NOP>')
-vim.keymap.set({'n'}, 'j', '<NOP>')
-vim.keymap.set({'n'}, 'k', '<NOP>')
-vim.keymap.set({'n'}, 'l', '<NOP>')
-
 -- Bootstrap packer.nvim (from: https://github.com/wbthomason/packer.nvim#bootstrapping)
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/opt/packer.nvim'
 
