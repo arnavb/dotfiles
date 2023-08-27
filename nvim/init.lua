@@ -4,37 +4,30 @@ vim.g.mapleader = ' '
 -- General Keybindings
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
--- Bootstrap packer.nvim (from: https://github.com/wbthomason/packer.nvim#bootstrapping)
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/opt/packer.nvim'
+-- From https://github.com/folke/lazy.nvim#-installation
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.system { 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path }
-  vim.api.nvim_command 'packadd packer.nvim'
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 
-vim.cmd 'packadd packer.nvim'
+vim.opt.rtp:prepend(lazypath)
 
-require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim'
-
-  use 'lukas-reineke/indent-blankline.nvim'
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-
-  use 'L3MON4D3/LuaSnip'
-
-  use 'rebelot/kanagawa.nvim'
-
-  use {
-    'lewis6991/gitsigns.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim',
-    },
-  }
-
-  use 'numToStr/Comment.nvim'
-
-  use 'andweeb/presence.nvim'
-end)
+require("lazy").setup({
+   'lukas-reineke/indent-blankline.nvim',
+   'nvim-treesitter/nvim-treesitter',
+   'rebelot/kanagawa.nvim',
+   'lewis6991/gitsigns.nvim',
+   'numToStr/Comment.nvim',
+   'andweeb/presence.nvim',
+})
 
 vim.opt.mouse = ""
 
