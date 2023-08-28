@@ -40,16 +40,16 @@ vim.o.smartcase = true
 vim.o.splitbelow = true
 vim.o.splitright = true
 
-vim.bo.expandtab = true
-vim.bo.shiftwidth = 4
-vim.bo.tabstop = 4
-vim.bo.undofile = true
+vim.go.expandtab = true
+vim.go.shiftwidth = 4
+vim.go.tabstop = 4
 
-vim.wo.signcolumn = 'yes'
-vim.wo.number = true
-vim.wo.relativenumber = true
-vim.wo.breakindent = true
-vim.opt.showbreak = "↪ "
+vim.o.undofile = true
+vim.o.signcolumn = 'yes'
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.breakindent = true
+vim.o.showbreak = "↪ "
 vim.o.pumheight = 10
 
 vim.cmd [[ colorscheme kanagawa ]]
@@ -69,8 +69,8 @@ local indentationGroup = vim.api.nvim_create_augroup('Indentation', { clear = tr
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'lua',
   callback = function()
-    vim.bo.shiftwidth = 2
-    vim.bo.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
   end,
   group = indentationGroup,
 })
@@ -79,8 +79,8 @@ local terminalGroup = vim.api.nvim_create_augroup('Terminal', { clear = true })
 -- Hide line numbers in the terminal
 vim.api.nvim_create_autocmd('TermOpen', {
   callback = function()
-    vim.wo.number = false
-    vim.wo.relativenumber = false
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
   end,
   group = terminalGroup,
 })
