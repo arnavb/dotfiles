@@ -41,7 +41,8 @@ require("lazy").setup({
 		dependencies = {
 			'hrsh7th/cmp-nvim-lsp',
 		},
-	}
+	},
+	{ "folke/neodev.nvim", opts = {} },
 })
 
 vim.opt.mouse = ""
@@ -106,9 +107,18 @@ require('indent_blankline').setup {
 require('Comment').setup()
 require('gitsigns').setup()
 
+local settings = {
+	lua_ls = {
+		Lua = {
+			workspace = { checkThirdParty = false },
+			telemetry = { enable = false },
+		},
+	},
+}
+
 require("mason").setup()
 require('mason-lspconfig').setup {
-	ensure_installed = {'lua_ls'}
+	ensure_installed = vim.tbl_keys(settings),
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -117,7 +127,8 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 require('mason-lspconfig').setup_handlers {
 	function (server_name)
 		require('lspconfig')[server_name].setup {
-			capabilities = capabilities
+			capabilities = capabilities,
+			settings = settings[server_name],
 		}
 	end
 }
