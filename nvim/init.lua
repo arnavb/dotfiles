@@ -5,59 +5,60 @@ vim.g.mapleader = ' '
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
 -- From https://github.com/folke/lazy.nvim#-installation
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+  vim.fn.system {
+    'git',
+    'clone',
+    '--filter=blob:none',
+    'https://github.com/folke/lazy.nvim.git',
+    '--branch=stable', -- latest stable release
     lazypath,
-  })
+  }
 end
 
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-   'lukas-reineke/indent-blankline.nvim',
-   'nvim-treesitter/nvim-treesitter',
-   'rebelot/kanagawa.nvim',
-   'lewis6991/gitsigns.nvim',
-   'numToStr/Comment.nvim',
-   'andweeb/presence.nvim',
-	 {
-		 "m4xshen/hardtime.nvim",
-		 dependencies = {
-			 "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim"
-		 },
-		 opts = {}
-	 },
+require('lazy').setup {
+  'lukas-reineke/indent-blankline.nvim',
+  'nvim-treesitter/nvim-treesitter',
+  'rebelot/kanagawa.nvim',
+  'lewis6991/gitsigns.nvim',
+  'numToStr/Comment.nvim',
+  'andweeb/presence.nvim',
+  {
+    'm4xshen/hardtime.nvim',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'nvim-lua/plenary.nvim',
+    },
+    opts = {},
+  },
 
-	 -- LSP
-	 {
-		 'neovim/nvim-lspconfig',
-		 dependencies = {
-			 'williamboman/mason.nvim',
-			 'williamboman/mason-lspconfig.nvim',
-       'WhoIsSethDaniel/mason-tool-installer.nvim',
-		 },
-	 },
-	 { 
-		 'hrsh7th/nvim-cmp',
-		dependencies = {
-			'hrsh7th/cmp-nvim-lsp',
-		},
-	},
+  -- LSP
+  {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+    },
+  },
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+    },
+  },
   {
     'stevearc/conform.nvim',
     opts = {},
   },
-	{ "folke/neodev.nvim", opts = {} },
-})
+  { 'folke/neodev.nvim', opts = {} },
+}
 
-vim.opt.mouse = ""
+vim.opt.mouse = ''
 
 -- Options
 vim.o.termguicolors = true
@@ -77,7 +78,7 @@ vim.o.signcolumn = 'yes'
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.breakindent = true
-vim.o.showbreak = "↪ "
+vim.o.showbreak = '↪ '
 vim.o.pumheight = 10
 
 vim.cmd [[ colorscheme kanagawa ]]
@@ -91,7 +92,6 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
-
 require('indent_blankline').setup {
   show_current_context = true,
 }
@@ -99,17 +99,17 @@ require('Comment').setup()
 require('gitsigns').setup()
 
 local settings = {
-	lua_ls = {
-		Lua = {
-			workspace = { checkThirdParty = false },
-			telemetry = { enable = false },
-		},
-	},
+  lua_ls = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    },
+  },
   stylua = {},
 }
 
-require("mason").setup()
-require("mason-tool-installer").setup {
+require('mason').setup()
+require('mason-tool-installer').setup {
   ensure_installed = vim.tbl_keys(settings),
 }
 
@@ -117,12 +117,12 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 require('mason-lspconfig').setup_handlers {
-	function (server_name)
-		require('lspconfig')[server_name].setup {
-			capabilities = capabilities,
-			settings = settings[server_name],
-		}
-	end
+  function(server_name)
+    require('lspconfig')[server_name].setup {
+      capabilities = capabilities,
+      settings = settings[server_name],
+    }
+  end,
 }
 
 local cmp = require 'cmp'
@@ -159,11 +159,11 @@ cmp.setup {
 }
 
 -- Setup formatting
-require("conform").setup({
-    formatters_by_ft = {
-        lua = { "stylua" },
-    },
-})
+require('conform').setup {
+  formatters_by_ft = {
+    lua = { 'stylua' },
+  },
+}
 
 -- Autocmds
 -- Two space indentation
@@ -189,10 +189,10 @@ vim.api.nvim_create_autocmd('TermOpen', {
 
 -- Autoformat on save
 local formattingGroup = vim.api.nvim_create_augroup('Formatting', { clear = true })
-vim.api.nvim_create_autocmd("BufWritePre", {
-		group=formattingGroup,
-    pattern = "*",
-    callback = function(args)
-        require("conform").format({ buf = args.buf })
-    end,
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = formattingGroup,
+  pattern = '*',
+  callback = function(args)
+    require('conform').format { buf = args.buf }
+  end,
 })
