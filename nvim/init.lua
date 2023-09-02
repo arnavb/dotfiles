@@ -41,6 +41,7 @@ require("lazy").setup({
 		 dependencies = {
 			 'williamboman/mason.nvim',
 			 'williamboman/mason-lspconfig.nvim',
+       'WhoIsSethDaniel/mason-tool-installer.nvim',
 		 },
 	 },
 	 { 
@@ -121,11 +122,12 @@ local settings = {
 			telemetry = { enable = false },
 		},
 	},
+  stylua = {},
 }
 
 require("mason").setup()
-require('mason-lspconfig').setup {
-	ensure_installed = vim.tbl_keys(settings),
+require("mason-tool-installer").setup {
+  ensure_installed = vim.tbl_keys(settings),
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
