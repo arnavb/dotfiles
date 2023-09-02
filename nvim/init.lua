@@ -27,6 +27,13 @@ require("lazy").setup({
    'lewis6991/gitsigns.nvim',
    'numToStr/Comment.nvim',
    'andweeb/presence.nvim',
+	 {
+		 "m4xshen/hardtime.nvim",
+		 dependencies = {
+			 "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim"
+		 },
+		 opts = {}
+	 },
 
 	 -- LSP
 	 {
