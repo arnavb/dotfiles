@@ -163,6 +163,7 @@ require('conform').setup {
   formatters_by_ft = {
     lua = { 'stylua' },
   },
+  format_on_save = true,
 }
 
 -- Autocmds
@@ -185,14 +186,4 @@ vim.api.nvim_create_autocmd('TermOpen', {
     vim.opt_local.relativenumber = false
   end,
   group = terminalGroup,
-})
-
--- Autoformat on save
-local formattingGroup = vim.api.nvim_create_augroup('Formatting', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePre', {
-  group = formattingGroup,
-  pattern = '*',
-  callback = function(args)
-    require('conform').format { buf = args.buf }
-  end,
 })
