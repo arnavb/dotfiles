@@ -50,6 +50,10 @@ require("lazy").setup({
 			'hrsh7th/cmp-nvim-lsp',
 		},
 	},
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+  },
 	{ "folke/neodev.nvim", opts = {} },
 })
 
@@ -87,27 +91,6 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
--- Autocmds
--- Two space indentation
-local indentationGroup = vim.api.nvim_create_augroup('Indentation', { clear = true })
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'lua',
-  callback = function()
-    vim.opt_local.shiftwidth = 2
-    vim.opt_local.tabstop = 2
-  end,
-  group = indentationGroup,
-})
-
-local terminalGroup = vim.api.nvim_create_augroup('Terminal', { clear = true })
--- Hide line numbers in the terminal
-vim.api.nvim_create_autocmd('TermOpen', {
-  callback = function()
-    vim.opt_local.number = false
-    vim.opt_local.relativenumber = false
-  end,
-  group = terminalGroup,
-})
 
 require('indent_blankline').setup {
   show_current_context = true,
@@ -174,3 +157,42 @@ cmp.setup {
     { name = 'nvim_lsp' },
   },
 }
+
+-- Setup formatting
+require("conform").setup({
+    formatters_by_ft = {
+        lua = { "stylua" },
+    },
+})
+
+-- Autocmds
+-- Two space indentation
+local indentationGroup = vim.api.nvim_create_augroup('Indentation', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'lua',
+  callback = function()
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+  end,
+  group = indentationGroup,
+})
+
+local terminalGroup = vim.api.nvim_create_augroup('Terminal', { clear = true })
+-- Hide line numbers in the terminal
+vim.api.nvim_create_autocmd('TermOpen', {
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+  end,
+  group = terminalGroup,
+})
+
+-- Autoformat on save
+local formattingGroup = vim.api.nvim_create_augroup('Formatting', { clear = true })
+vim.api.nvim_create_autocmd("BufWritePre", {
+		group=formattingGroup,
+    pattern = "*",
+    callback = function(args)
+        require("conform").format({ buf = args.buf })
+    end,
+})
