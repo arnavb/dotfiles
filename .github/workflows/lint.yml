@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Luacheck linter
-        uses: lunarmodules/luacheck@v1
+      - name: Luacheck
+        uses: nebularg/actions-luacheck@v1
         with:
-          args: nvim
+          path: ${{ github.workspace }}/nvim
