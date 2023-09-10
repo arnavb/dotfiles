@@ -58,6 +58,7 @@ require('lazy').setup {
     'stevearc/conform.nvim',
     opts = {},
   },
+  'mfussenegger/nvim-lint',
   { 'folke/neodev.nvim', opts = {} },
 }
 
@@ -109,6 +110,7 @@ local settings = {
     },
   },
   stylua = {},
+  luacheck = {},
 }
 
 require('mason').setup()
@@ -171,6 +173,11 @@ require('conform').setup {
   format_on_save = true,
 }
 
+-- Setup linting
+require('lint').linters_by_ft = {
+  lua = { 'luacheck' },
+}
+
 -- Autocmds
 -- Two space indentation
 local indentationGroup = vim.api.nvim_create_augroup('Indentation', { clear = true })
@@ -191,4 +198,13 @@ vim.api.nvim_create_autocmd('TermOpen', {
     vim.opt_local.relativenumber = false
   end,
   group = terminalGroup,
+})
+
+-- Linting
+local lintingGroup = vim.api.nvim_create_augroup('Linting', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+  callback = function()
+    require('lint').try_lint()
+  end,
+  group = lintingGroup,
 })
