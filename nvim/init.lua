@@ -67,6 +67,7 @@ vim.opt.mouse = ''
 -- Options
 vim.o.termguicolors = true
 vim.o.laststatus = 0
+vim.o.spell = true
 vim.o.hlsearch = false
 vim.o.ignorecase = true
 vim.o.smartcase = true
