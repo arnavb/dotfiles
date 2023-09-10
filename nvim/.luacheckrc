@@ -1,2 +1,2 @@
 ---@diagnostic disable: lowercase-global
-globals = { 'lua' }
+globals = { 'vim' }
