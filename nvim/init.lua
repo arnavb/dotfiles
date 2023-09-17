@@ -21,11 +21,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
-  'lukas-reineke/indent-blankline.nvim',
+  { 'lukas-reineke/indent-blankline.nvim', opts = { show_current_context = true } },
   'nvim-treesitter/nvim-treesitter',
   'rebelot/kanagawa.nvim',
-  'lewis6991/gitsigns.nvim',
-  'numToStr/Comment.nvim',
+  { 'lewis6991/gitsigns.nvim', opts = {} },
+  { 'numToStr/Comment.nvim', opts = {} },
   'andweeb/presence.nvim',
   {
     'm4xshen/hardtime.nvim',
@@ -40,7 +40,7 @@ require('lazy').setup {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
-      'williamboman/mason.nvim',
+      { 'williamboman/mason.nvim', opts = {} },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
     },
@@ -97,12 +97,6 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
-require('indent_blankline').setup {
-  show_current_context = true,
-}
-require('Comment').setup()
-require('gitsigns').setup()
-
 local settings = {
   lua_ls = {
     Lua = {
@@ -114,7 +108,6 @@ local settings = {
   luacheck = {},
 }
 
-require('mason').setup()
 require('mason-tool-installer').setup {
   ensure_installed = vim.tbl_keys(settings),
 }
