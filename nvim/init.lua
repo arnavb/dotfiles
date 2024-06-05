@@ -90,6 +90,7 @@ vim.cmd [[ colorscheme kanagawa ]]
 require('ibl').setup {}
 
 -- Treesitter
+---@diagnostic disable-next-line: missing-fields
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'all',
   highlight = {
