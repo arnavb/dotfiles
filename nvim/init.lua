@@ -25,7 +25,6 @@ require('lazy').setup {
   'nvim-treesitter/nvim-treesitter',
   'rebelot/kanagawa.nvim',
   { 'lewis6991/gitsigns.nvim', opts = {} },
-  { 'numToStr/Comment.nvim', opts = {} },
   'andweeb/presence.nvim',
   {
     'm4xshen/hardtime.nvim',
