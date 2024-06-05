@@ -21,7 +21,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
-  { 'lukas-reineke/indent-blankline.nvim', opts = { show_current_context = true } },
+  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
   'nvim-treesitter/nvim-treesitter',
   'rebelot/kanagawa.nvim',
   { 'lewis6991/gitsigns.nvim', opts = {} },
@@ -87,6 +87,8 @@ vim.o.showbreak = '↪ '
 vim.o.pumheight = 10
 
 vim.cmd [[ colorscheme kanagawa ]]
+
+require('ibl').setup {}
 
 -- Treesitter
 require('nvim-treesitter.configs').setup {
