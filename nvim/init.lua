@@ -92,7 +92,6 @@ require('ibl').setup {}
 -- Treesitter
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'all',
-  ignore_install = { 'haskell' }, -- Currently broken: https://github.com/tree-sitter/tree-sitter-haskell/issues/34
   highlight = {
     enable = true,
   },
