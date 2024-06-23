@@ -213,6 +213,15 @@ vim.api.nvim_create_autocmd('TermOpen', {
   group = terminalGroup,
 })
 
+-- Disable spellcheck for certain files
+local spellDisableGroup = vim.api.nvim_create_augroup('SpellDisable', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'fsharp',
+  callback = function()
+    vim.opt_local.spell = false
+  end,
+})
+
 -- Linting
 local lintingGroup = vim.api.nvim_create_augroup('Linting', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
