@@ -24,6 +24,7 @@ require('lazy').setup {
   { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
   'nvim-treesitter/nvim-treesitter',
   'rebelot/kanagawa.nvim',
+  'EdenEast/nightfox.nvim',
   { 'lewis6991/gitsigns.nvim', opts = {} },
   'andweeb/presence.nvim',
   {
@@ -85,7 +86,7 @@ vim.o.breakindent = true
 vim.o.showbreak = '↪ '
 vim.o.pumheight = 10
 
-vim.cmd [[ colorscheme kanagawa ]]
+vim.cmd [[ colorscheme carbonfox ]]
 
 require('ibl').setup {}
 
