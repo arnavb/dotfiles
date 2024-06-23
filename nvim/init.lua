@@ -104,6 +104,8 @@ local settings = {
       telemetry = { enable = false },
     },
   },
+  pyright = {},
+  black = {},
   stylua = {},
   luacheck = {},
 }
@@ -163,6 +165,7 @@ cmp.setup {
 require('conform').setup {
   formatters_by_ft = {
     lua = { 'stylua' },
+    python = { 'black' },
   },
   format_on_save = true,
 }
