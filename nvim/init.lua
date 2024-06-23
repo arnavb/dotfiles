@@ -21,11 +21,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
-  { 'lukas-reineke/indent-blankline.nvim', opts = { show_current_context = true } },
+  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
   'nvim-treesitter/nvim-treesitter',
   'rebelot/kanagawa.nvim',
   { 'lewis6991/gitsigns.nvim', opts = {} },
-  { 'numToStr/Comment.nvim', opts = {} },
   'andweeb/presence.nvim',
   {
     'm4xshen/hardtime.nvim',
@@ -88,10 +87,12 @@ vim.o.pumheight = 10
 
 vim.cmd [[ colorscheme kanagawa ]]
 
+require('ibl').setup {}
+
 -- Treesitter
+---@diagnostic disable-next-line: missing-fields
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'all',
-  ignore_install = { 'haskell' }, -- Currently broken: https://github.com/tree-sitter/tree-sitter-haskell/issues/34
   highlight = {
     enable = true,
   },
@@ -102,6 +103,9 @@ local settings = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
+      diagnostics = {
+        globals = { 'vim' },
+      },
     },
   },
   pyright = {},
@@ -167,7 +171,7 @@ require('conform').setup {
     lua = { 'stylua' },
     python = { 'black' },
   },
-  format_on_save = true,
+  format_on_save = {},
 }
 
 -- Setup linting
@@ -205,3 +209,18 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
   end,
   group = lintingGroup,
 })
+
+if vim.fn.has 'wsl' then
+  vim.g.clipboard = {
+    name = 'win32yank-wsl',
+    copy = {
+      ['+'] = 'win32yank.exe -i --crlf',
+      ['*'] = 'win32yank.exe -i --crlf',
+    },
+    paste = {
+      ['+'] = 'win32yank.exe -o --lf',
+      ['*'] = 'win32yank.exe -o --lf',
+    },
+    cache_enabled = true,
+  }
+end
