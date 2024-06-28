@@ -235,6 +235,26 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
   group = lintingGroup,
 })
 
+-- LSP keymaps
+local lspAttachGroup = vim.api.nvim_create_augroup('LspAttachGroup', { clear = true })
+vim.api.nvim_create_autocmd({ 'LspAttach' }, {
+  callback = function(event)
+    local map = function(keys, func, desc)
+      vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+    end
+
+    map('gd', vim.lsp.buf.definition, 'Goto Definition')
+    map('gr', vim.lsp.buf.references, 'Goto References')
+    map('gI', vim.lsp.buf.implementation, 'Goto Implementation')
+    map('<leader>D', vim.lsp.buf.type_definition, 'Goto Type Definition')
+    map('<leader>rn', vim.lsp.buf.rename, 'Rename')
+    map('<leader>ca', vim.lsp.buf.code_action, 'Code Action')
+    map('K', vim.lsp.buf.hover, 'Hover')
+    map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
+  end,
+  group = lspAttachGroup,
+})
+
 if vim.fn.has 'wsl' then
   vim.g.clipboard = {
     name = 'win32yank-wsl',
