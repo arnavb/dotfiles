@@ -59,6 +59,14 @@ require('lazy').setup {
     opts = {},
   },
   'mfussenegger/nvim-lint',
+  {
+    'rachartier/tiny-inline-diagnostic.nvim',
+    event = 'VeryLazy',
+    config = function()
+      vim.opt.updatetime = 100
+      require('tiny-inline-diagnostic').setup()
+    end,
+  },
   { 'folke/neodev.nvim', opts = {} },
 }
 
@@ -269,3 +277,5 @@ if vim.fn.has 'wsl' then
     cache_enabled = true,
   }
 end
+
+vim.diagnostic.config { virtual_text = false }
