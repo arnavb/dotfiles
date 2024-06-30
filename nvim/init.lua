@@ -263,7 +263,7 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
   group = lspAttachGroup,
 })
 
-if vim.fn.has 'wsl' then
+if vim.fn.has 'wsl' ~= 0 then
   vim.g.clipboard = {
     name = 'win32yank-wsl',
     copy = {
