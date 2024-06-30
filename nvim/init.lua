@@ -64,7 +64,11 @@ require('lazy').setup {
     event = 'VeryLazy',
     config = function()
       vim.opt.updatetime = 100
-      require('tiny-inline-diagnostic').setup()
+      require('tiny-inline-diagnostic').setup {
+        signs = {
+          arrow = '',
+        },
+      }
     end,
   },
   { 'folke/neodev.nvim', opts = {} },
