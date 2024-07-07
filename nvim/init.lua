@@ -100,7 +100,9 @@ vim.o.pumheight = 10
 
 vim.cmd [[ colorscheme carbonfox ]]
 
-require('ibl').setup {}
+require('ibl').setup {
+  scope = { enabled = false },
+}
 
 -- Treesitter
 ---@diagnostic disable-next-line: missing-fields
