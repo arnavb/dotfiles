@@ -137,10 +137,14 @@ local settings = {
     },
   },
   fsautocomplete = {},
+  fantomas = {},
   pyright = {},
   black = {},
   stylua = {},
   luacheck = {},
+  ['clang-format'] = {},
+  clangd = {},
+  yamlls = {},
 }
 
 require('mason-tool-installer').setup {
@@ -200,8 +204,10 @@ cmp.setup {
 -- Setup formatting
 require('conform').setup {
   formatters_by_ft = {
+    cpp = { 'clang-format' },
     lua = { 'stylua' },
     python = { 'black' },
+    fsharp = { 'fantomas' },
   },
   format_on_save = {},
 }
