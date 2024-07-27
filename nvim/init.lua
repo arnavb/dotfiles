@@ -145,6 +145,11 @@ local settings = {
   ['clang-format'] = {},
   clangd = {},
   yamlls = {},
+  ['rust-analyzer'] = {
+    checkOnSave = {
+      command = 'clippy',
+    },
+  },
 }
 
 require('mason-tool-installer').setup {
