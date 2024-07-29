@@ -150,6 +150,7 @@ local settings = {
       command = 'clippy',
     },
   },
+  rustfmt = {},
 }
 
 require('mason-tool-installer').setup {
@@ -213,6 +214,7 @@ require('conform').setup {
     lua = { 'stylua' },
     python = { 'black' },
     fsharp = { 'fantomas' },
+    rust = { 'rustfmt' },
   },
   format_on_save = {},
 }
