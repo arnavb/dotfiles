@@ -150,6 +150,7 @@ local settings = {
       command = 'clippy',
     },
   },
+  rustfmt = {},
 }
 
 require('mason-tool-installer').setup {
