@@ -151,6 +151,7 @@ local settings = {
     },
   },
   rustfmt = {},
+  emmet_language_server = {},
 }
 
 require('mason-tool-installer').setup {
