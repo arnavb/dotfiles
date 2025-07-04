@@ -107,7 +107,7 @@ require('ibl').setup {
 -- Treesitter
 ---@diagnostic disable-next-line: missing-fields
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'rust', 'python', 'lua' },
+  ensure_installed = { 'rust', 'python', 'lua', 'html', 'css' },
   highlight = {
     enable = true,
   },
