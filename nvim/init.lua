@@ -86,9 +86,9 @@ vim.o.smartcase = true
 vim.o.splitbelow = true
 vim.o.splitright = true
 
-vim.opt_local.expandtab = true
-vim.opt_local.shiftwidth = 4
-vim.opt_local.tabstop = 4
+vim.opt_global.expandtab = true
+vim.opt_global.shiftwidth = 4
+vim.opt_global.tabstop = 4
 
 vim.o.undofile = true
 vim.o.signcolumn = 'yes'
