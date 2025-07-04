@@ -242,7 +242,7 @@ require('lint').linters_by_ft = {
 -- Two space indentation
 local indentationGroup = vim.api.nvim_create_augroup('Indentation', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'lua',
+  pattern = { 'lua', 'html', 'css' },
   callback = function()
     vim.opt_local.shiftwidth = 2
     vim.opt_local.tabstop = 2
