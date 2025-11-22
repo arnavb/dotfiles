@@ -25,6 +25,7 @@ require('lazy').setup {
   'nvim-treesitter/nvim-treesitter',
   'rebelot/kanagawa.nvim',
   'EdenEast/nightfox.nvim',
+  'vague-theme/vague.nvim',
   { 'lewis6991/gitsigns.nvim', opts = {} },
   'andweeb/presence.nvim',
   {
@@ -98,7 +99,7 @@ vim.o.breakindent = true
 vim.o.showbreak = '↪ '
 vim.o.pumheight = 10
 
-vim.cmd [[ colorscheme carbonfox ]]
+vim.cmd [[ colorscheme vague ]]
 
 require('ibl').setup {
   scope = { enabled = false },
